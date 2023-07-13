@@ -1,0 +1,59 @@
+#include<stdio.h>
+
+int* merge(int arr[],int start,int mid ,int end){
+	int arr1[end-start+1];
+	int a = start;
+	int b = mid+1;
+	for(int i=0;a <= mid || b <= end;i++){
+      		if(a > mid){
+			arr1[i] = arr[b];
+			b++;
+		}else if(b > end){
+			arr1[i] = arr[a];
+			a++;
+		}else{
+			if(arr[a]<=arr[b]){
+				arr1[i] = arr[a];
+				a++;
+			}else{
+				arr1[i] = arr[b];
+				b++;
+			}
+		}	
+	}
+	int i=0;
+	for(int j=start;j<=end;j++){
+		arr[j] = arr1[i];
+		i++;
+	}
+	return arr;
+}
+int* mergeSort(int arr[],int start , int end){
+
+	int mid;
+
+	if(start<end){
+		mid = (start+end)/2;
+		mergeSort(arr,start,mid);
+		mergeSort(arr,mid+1,end);
+		merge(arr,start,mid,end);
+	}
+	return arr;
+}
+void main(){
+	int size =0;
+	printf("Enter the size array :");
+	scanf("%d",&size);
+	int arr[size];
+	printf("Enter %d elements of array :\n",size);
+	for(int i=0;i<size;i++){
+		scanf("%d",&arr[i]);
+	}
+	int start = 0;
+	int end = size-1;
+	mergeSort(arr,start,end);
+	printf("After Sorting :\n");
+	for(int i=0;i<size;i++){
+		printf("%d\n",arr[i]);
+	}
+}
